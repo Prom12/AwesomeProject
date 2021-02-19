@@ -1,21 +1,63 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// In App.js in a new project
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+import React,{useState} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator} from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import SignIn from './components/SignIn'
+import SignUp from './components/SignUp'
+import MainPage from './components/MainPage'
+
+import Screen1 from './components/Drawer/Screen1';
+import Screen2 from './components/Drawer/Screen2';
+import Screen3 from './components/Drawer/Screen3';
+
+import {AuthContext} from "./AuthContext";
+
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+export default ()=> {
+  const [userToken,setUserToken] = useState(null);
+
+  const authMemo = React.useMemo(() => {
+    return{
+      signIn:()=>{
+          setUserToken('hgjg');
+        
+      },
+      signUp:()=>{
+        setUserToken('');
+      },
+      signOut:()=>{
+        setUserToken(null);
+      },
+    }
+  }, [])
+    
+  return ( 
+    <NavigationContainer>
+      <AuthContext.Provider value={authMemo}>
+      {(userToken) ? 
+          (
+            <Drawer.Navigator initialRouteName='MainPage'>
+              <Drawer.Screen name='MainPage' component={MainPage} options = {{headerShown:'true', title:'Food Categories', textAlign:'center'}}/>
+              <Drawer.Screen name='H' component={Screen1} options = {{headerShown:'true',}}/>
+              <Drawer.Screen name='Hom' component={Screen2} options = {{headerShown:'true',}}/>
+              <Drawer.Screen name='Sign Out' component={Screen3} options = {{headerShown:'true',}}/>
+            </Drawer.Navigator>
+          ) :
+          (
+            <Stack.Navigator >
+              <Stack.Screen name="SignIn" component={SignIn} />
+              <Stack.Screen name="SignUp" component={SignUp}/>
+            </Stack.Navigator>
+
+            
+          )
+        }
+        </AuthContext.Provider>
+      </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
