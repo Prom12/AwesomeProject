@@ -20,6 +20,7 @@ export default Card = (props) => {
 styles = StyleSheet.create({
     card: {
         borderWidth:1,
+        borderColor:'#D3D3D3',
         height:210,
         backgroundColor:'white',
         margin:10,

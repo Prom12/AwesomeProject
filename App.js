@@ -1,6 +1,7 @@
 // In App.js in a new project
 
 import React,{useState} from 'react';
+import {Button,View} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator} from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,42 +10,61 @@ import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import MainPage from './components/MainPage'
 
-import Screen1 from './components/Drawer/Screen1';
+import Profile from './components/Drawer/Profile';
 import Screen2 from './components/Drawer/Screen2';
 import Screen3 from './components/Drawer/Screen3';
 
 import {AuthContext} from "./AuthContext";
+import {HeaderContext} from "./AuthContext";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export default ()=> {
   const [userToken,setUserToken] = useState(null);
+  const [edit,setEdit] = useState('null');
 
   const authMemo = React.useMemo(() => {
     return{
       signIn:()=>{
-          setUserToken('hgjg');
-        
+          setUserToken('id');
       },
       signUp:()=>{
-        setUserToken('');
+        setUserToken('id');
       },
       signOut:()=>{
         setUserToken(null);
       },
     }
   }, [])
-    
+  const  UpdateEdit = () => {
+    setEdit('bvvb')
+  }
+
   return ( 
+      
     <NavigationContainer>
       <AuthContext.Provider value={authMemo}>
+      {/*<HeaderContext.Provider value={UpdateEdit(null)}> </HeaderContext.Provider>*/}
+      
       {(userToken) ? 
           (
             <Drawer.Navigator initialRouteName='MainPage'>
+              
+              <Drawer.Screen name='Profile' component={Profile}  
+               /*  options = {{headerShown:'true',
+                 headerRight: () => (
+                  <View style = {{marginRight:15,}}>
+                      <Button
+                        onPress={() =>{(e)=>UpdateEdit(e)}}
+                        title='Edit'
+                        color='gray'
+                      />
+                  </View>
+                 )}}*/
+                />
               <Drawer.Screen name='MainPage' component={MainPage} options = {{headerShown:'true', title:'Food Categories', textAlign:'center'}}/>
-              <Drawer.Screen name='H' component={Screen1} options = {{headerShown:'true',}}/>
-              <Drawer.Screen name='Hom' component={Screen2} options = {{headerShown:'true',}}/>
+              <Drawer.Screen name='H' component={Screen2} options = {{headerShown:'true',}}/>
               <Drawer.Screen name='Sign Out' component={Screen3} options = {{headerShown:'true',}}/>
             </Drawer.Navigator>
           ) :
@@ -52,12 +72,11 @@ export default ()=> {
             <Stack.Navigator >
               <Stack.Screen name="SignIn" component={SignIn} />
               <Stack.Screen name="SignUp" component={SignUp}/>
-            </Stack.Navigator>
-
-            
+            </Stack.Navigator>           
           )
         }
-        </AuthContext.Provider>
+        
+         </AuthContext.Provider>
       </NavigationContainer>
   );
 }
