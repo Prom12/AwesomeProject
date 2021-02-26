@@ -13,7 +13,8 @@ import {
 } from "react-native";
 
 function Profile({ navigation }) {
-  const [edit, setEdit] = useState({
+  const [edit, setEdit] = useState(false);
+  const [profile, setProfile] = useState({
     name: "",
     userName: "",
     age: "",
@@ -24,9 +25,7 @@ function Profile({ navigation }) {
   //added this
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <Button onPress={() => console.log(edit)} title="Edit" />
-      ),
+      headerRight: () => <Button onPress={() => setEdit(true)} title="Edit" />,
     });
   }, [navigation]);
 
@@ -78,7 +77,7 @@ function Profile({ navigation }) {
           >
             <TouchableOpacity
               onPress={() => {
-                setEdit(null);
+                setProfile(null);
               }}
             >
               <Text style={{ textAlign: "center" }}>Edit</Text>
@@ -92,7 +91,7 @@ function Profile({ navigation }) {
           source={require("../../assets/internal.jpg")}
         />
       </View>
-      {edit ? (
+      {!edit ? (
         <View style={styles.content}>
           <Text style={styles.text}>Name : Akut3k Amos</Text>
           <Text style={styles.text}>User name : Amos</Text>
@@ -105,7 +104,7 @@ function Profile({ navigation }) {
           <TextInput
             style={styles.text}
             placeholder="Name : Akut3k Amos"
-            onChangeText={(text) => setEdit({ ...edit, name: text })}
+            onChangeText={(text) => setProfile({ ...profile, name: text })}
           ></TextInput>
           <TextInput
             style={styles.text}
@@ -114,26 +113,27 @@ function Profile({ navigation }) {
           <TextInput
             style={styles.text}
             placeholder="Age : 15"
-            onChangeText={(text) => setEdit({ ...edit, age: text })}
+            onChangeText={(text) => setProfile({ ...profile, age: text })}
           ></TextInput>
           <TextInput
             style={styles.text}
             placeholder="Email : amos@gmail.com"
-            onChangeText={(text) => setEdit({ ...edit, email: text })}
+            onChangeText={(text) => setProfile({ ...profile, email: text })}
           ></TextInput>
           <TextInput
             style={styles.text}
             placeholder="Password : ***************"
-            onChangeText={(text) => setEdit({ ...edit, password: text })}
+            onChangeText={(text) => setProfile({ ...profile, password: text })}
           ></TextInput>
           <View style={{ marginTop: 9, shadowOpacity: 1 }}>
             <Button
               title="Save"
               color="blue"
               onPress={() => {
-                // setEdit(me);
-                UpdateEdit(edit.name);
                 //function to send data to database
+
+                //close edit after sending data
+                setEdit(false);
               }}
             ></Button>
           </View>
