@@ -40,7 +40,7 @@ export default () => {
   return (
     <NavigationContainer>
       <AuthContext.Provider value={authMemo}>
-        {true ? (
+        {userToken ? (
           <Drawer.Navigator initialRouteName="MainPage">
             <Drawer.Screen
               name="Profile"
@@ -64,9 +64,9 @@ export default () => {
               options={{ headerShown: "true" }}
             />
             <Drawer.Screen
-              name="Sign Out"
+              name="Something"
               component={Screen3}
-              options={{ headerShown: "true" }}
+              options={{ headerShown: "true"}}
             />
           </Drawer.Navigator>
         ) : (
