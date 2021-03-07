@@ -1,21 +1,23 @@
 import React from "react";
-import { Image, StyleSheet, Text, View,} from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
-export default function Card(props) {
-  const { image } = props;
-  return (
-    <View style={styles.card}>
-      <Image style={styles.image} source={image}></Image>
-      <View style={styles.textCard}>
-        <Text style={styles.food}>{props.title}</Text>
-        <Text style={styles.amount}>{props.amount}</Text>
-      </View>
+const Card = (props) => (
+  <View style={styles.card}>
+    <Image
+      style={styles.image}
+      source={require("../../assets/internal.jpg")} //change the require to {uri:props.image} for some weird reason the images online aren't showing;
+    ></Image>
+    <View style={styles.textCard}>
+      <Text style={styles.food}>{props.title}</Text>
+      <Text style={styles.amount}>{props.amount}</Text>
     </View>
-  );
-}
+  </View>
+);
+export default Card;
 
 const styles = StyleSheet.create({
   card: {
+    width: 160,
     borderWidth: 1,
     borderColor: "#D3D3D3",
     height: 210,

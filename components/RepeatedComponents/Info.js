@@ -1,11 +1,6 @@
-import React,{useState} from 'react'
-import {
-    StyleSheet,
-    View,    
-    Button,
-    TextInput,
-  } from "react-native";
-function Info(props){
+import React, { useState } from "react";
+import { StyleSheet, View, Button, TextInput } from "react-native";
+function Info(props) {
   const [profile, setProfile] = useState({
     name: "",
     userName: "",
@@ -13,40 +8,40 @@ function Info(props){
     email: "",
     password: "",
   });
-    return(
-        <View style={styles.content}>
-          <TextInput
-            value={profile.name}
-            style={styles.text}
-            placeholder="Name : Akut3k Amos"
-            onChangeText={(text) => setProfile({ ...profile, name: text })}
-          ></TextInput>
-          <TextInput
-            value={profile.userName}
-            style={styles.text}
-            placeholder="User name : Amos"
-            onChangeText={(text) => setProfile({ ...profile, userName: text })}
-          ></TextInput>
-          <TextInput
-            value={profile.age}
-            style={styles.text}
-            placeholder="Age : 15"
-            onChangeText={(text) => setProfile({ ...profile, age: text })}
-          ></TextInput>
-          <TextInput
-            value={profile.email}
-            style={styles.text}
-            placeholder="Email : amos@gmail.com"
-            onChangeText={(text) => setProfile({ ...profile, email: text })}
-          ></TextInput>
-          <TextInput
-            value={profile.password}
-            style={styles.text}
-            placeholder="Password : ***************"
-            onChangeText={(text) => setProfile({ ...profile, password: text })}
-          ></TextInput>
-        </View>     
-    )
+  return (
+    <View style={styles.content}>
+      <TextInput
+        value={profile.name}
+        style={styles.text}
+        placeholder="Name : Akut3k Amos"
+        onChangeText={(text) => setProfile({ ...profile, name: text })}
+      ></TextInput>
+      <TextInput
+        value={profile.userName}
+        style={styles.text}
+        placeholder="User name : Amos"
+        onChangeText={(text) => setProfile({ ...profile, userName: text })}
+      ></TextInput>
+      <TextInput
+        value={profile.age}
+        style={styles.text}
+        placeholder="Age : 15"
+        onChangeText={(text) => setProfile({ ...profile, age: text })}
+      ></TextInput>
+      <TextInput
+        value={profile.email}
+        style={styles.text}
+        placeholder="Email : amos@gmail.com"
+        onChangeText={(text) => setProfile({ ...profile, email: text })}
+      ></TextInput>
+      <TextInput
+        value={profile.password}
+        style={styles.text}
+        placeholder="Password : ***************"
+        onChangeText={(text) => setProfile({ ...profile, password: text })}
+      ></TextInput>
+    </View>
+  );
 }
 export default Info;
 
@@ -82,5 +77,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#D3D3D3",
     borderRadius: 5,
   },
-
 });
