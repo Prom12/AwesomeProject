@@ -4,14 +4,19 @@ import { categories } from "../../constants/categories";
 
 export default function Screen2({ route }) {
   let id = JSON.stringify(route.params.id);
-  let cat = id; //categories[0].key);
+  let cat = categories[0].key; // something is wrong here but code is running
 
   return (
     <View>
       <TouchableOpacity>
-        {id === cat ? <Text>{route.params.id}</Text> : cat}
+        {id === cat ? (
+          <Text>{route.params.id}</Text>
+        ) : (
+          <Text>{cat} adfdfsdfsd</Text>
+        )}
         <Text>{route.params.id}</Text>
         <Text>{route.params.image}</Text>
+        <Text>{route.params.title}</Text>
         <Text>{route.params.amount}</Text>
         <Text>{route.params.detail}</Text>
       </TouchableOpacity>
