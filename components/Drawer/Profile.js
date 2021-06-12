@@ -11,16 +11,15 @@ import {
   Button,
   TextInput,
 } from "react-native";
-import Info from "../RepeatedComponents/Info";
 
 function Profile({ navigation }) {
   const [edit, setEdit] = useState(true);
   const [profile, setProfile] = useState({
-    name: "",
-    userName: "",
-    age: "",
-    email: "",
-    password: "",
+    name: "Prom Alo",
+    userName: "prom",
+    age: "12",
+    email: "prom@gmail.com",
+    password: "12345",
   });
 
   //added this
@@ -29,13 +28,21 @@ function Profile({ navigation }) {
       headerRight: () => (
         <TouchableOpacity
           style={{ borderWidth: 1, padding: 5, margin: 7, borderRadius: 5 }}
-          onPress={() => setEdit(false)}
+          onPress={Edit}
         >
-          <Text>Edit</Text>
+          <Text>{edit ? "Edit" : "Save"}</Text>
         </TouchableOpacity>
       ),
     });
-  }, [navigation]);
+  }, [edit]);
+  //Edit function
+  const Edit = () => {
+    if (edit) {
+      setEdit(!edit);
+    } else {
+      setEdit(!edit);
+    }
+  };
 
   return (
     //Entire Body
@@ -50,10 +57,10 @@ function Profile({ navigation }) {
       </View>
       {edit ? (
         <View style={styles.content}>
-          <Text style={styles.text}>Name : {profile.name}</Text>
-          <Text style={styles.text}>User name :{profile.userName}</Text>
-          <Text style={styles.text}>Age : {profile.age}</Text>
-          <Text style={styles.text}>Email : {profile.email}</Text>
+          <Text style={styles.text}>{profile.name}</Text>
+          <Text style={styles.text}>{profile.userName}</Text>
+          <Text style={styles.text}>{profile.age}</Text>
+          <Text style={styles.text}>{profile.email}</Text>
         </View>
       ) : (
         <View
@@ -63,13 +70,13 @@ function Profile({ navigation }) {
             <TextInput
               value={profile.name}
               style={styles.text}
-              placeholder="Name : Akut3k Amos"
+              placeholder="Name"
               onChangeText={(text) => setProfile({ ...profile, name: text })}
             ></TextInput>
             <TextInput
               value={profile.userName}
               style={styles.text}
-              placeholder="User name : Amos"
+              placeholder="User name"
               onChangeText={(text) =>
                 setProfile({ ...profile, userName: text })
               }
@@ -77,37 +84,24 @@ function Profile({ navigation }) {
             <TextInput
               value={profile.age}
               style={styles.text}
-              placeholder="Age : 15"
+              placeholder="Age"
               onChangeText={(text) => setProfile({ ...profile, age: text })}
             ></TextInput>
             <TextInput
               value={profile.email}
               style={styles.text}
-              placeholder="Email : amos@gmail.com"
+              placeholder="Email"
               onChangeText={(text) => setProfile({ ...profile, email: text })}
             ></TextInput>
             <TextInput
               value={profile.password}
               style={styles.text}
               secureTextEntry={true}
-              placeholder="Password : ***************"
+              placeholder="Password"
               onChangeText={(text) =>
                 setProfile({ ...profile, password: text })
               }
             ></TextInput>
-          </View>
-
-          <View style={styles.button}>
-            <Button
-              title="Save"
-              color="blue"
-              onPress={() => {
-                //function to send data to database
-
-                //close edit after sending data
-                setEdit(true);
-              }}
-            ></Button>
           </View>
         </View>
       )}

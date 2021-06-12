@@ -26,7 +26,6 @@ const nav = () => {
       signIn: (email, password) => {
         if (email == "promatsakpo@gmail.com" && password == "qwerty") {
           setUserToken("id");
-          console.log("email : " + email + " password : " + password);
         } else {
           console.log("email and password not valid");
         }

@@ -1,29 +1,75 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { categories } from "../../constants/categories";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from "react-native";
 
 export default function Screen2({ route }) {
-  let id = JSON.stringify(route.params.id);
-  let cat = categories[0].key; // something is wrong here but code is running
-
   return (
-    <View>
-      <TouchableOpacity>
-        {id === cat ? (
-          <Text>{route.params.id}</Text>
-        ) : (
-          <Text>{cat} adfdfsdfsd</Text>
-        )}
-        <Text>{route.params.id}</Text>
+    <View style={styles.body}>
+      <View style={styles.topView}>
         <Image
-          width="40%"
-          height="20%"
-          source={{ uri: `${route.params.image}` }}
-        ></Image>
+          style={styles.image}
+          source={{
+            uri: `${route.params.image}`,
+          }}
+        />
+      </View>
+      <View style={styles.bottomView}>
         <Text>{route.params.title}</Text>
         <Text>{route.params.amount}</Text>
-        <Text>{route.params.detail}</Text>
-      </TouchableOpacity>
+        <Text>Quantity</Text>
+        <View style={styles.detail}>
+          <Text>{route.params.detail}</Text>
+          <View style={styles.add}>
+            <Text>+</Text>
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
+const styles = StyleSheet.create({
+  body: {
+    backgroundColor: "white",
+    height: Dimensions.get("screen").height,
+    width: Dimensions.get("screen").width,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+  },
+  topView: {
+    marginTop: -40,
+    height: "50%",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    borderRadius: 10,
+  },
+  bottomView: {
+    height: "50%",
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  detail: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    marginTop: 2,
+  },
+  add: {
+    padding: 5,
+    backgroundColor: "blue",
+    borderRadius: 10,
+    maxHeight: 30,
+    marginRight: 2,
+    minWidth: 30,
+  },
+});
