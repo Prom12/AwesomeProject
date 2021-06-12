@@ -43,7 +43,9 @@ function Profile({ navigation }) {
       <View style={styles.imageBody}>
         <Image
           style={styles.image}
-          source={require("../../assets/internal.jpg")}
+          source={{
+            uri: "https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/ke17ZwdGBToddI8pDm48kGfiFqkITS6axXxhYYUCnlRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpxQ1ibo-zdhORxWnJtmNCajDe36aQmu-4Z4SFOss0oowgxUaachD66r8Ra2gwuBSqM/icon.png?format=1000w",
+          }}
         />
       </View>
       {edit ? (
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     width: "30%",
     height: "100%",
     resizeMode: "cover",
-    borderRadius: 40,
+    borderRadius: 50,
   },
   body: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,

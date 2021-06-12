@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { categories } from "../../constants/categories";
 
 export default function Screen2({ route }) {
@@ -15,7 +15,11 @@ export default function Screen2({ route }) {
           <Text>{cat} adfdfsdfsd</Text>
         )}
         <Text>{route.params.id}</Text>
-        <Text>{route.params.image}</Text>
+        <Image
+          width="40%"
+          height="20%"
+          source={{ uri: `${route.params.image}` }}
+        ></Image>
         <Text>{route.params.title}</Text>
         <Text>{route.params.amount}</Text>
         <Text>{route.params.detail}</Text>

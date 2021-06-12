@@ -18,13 +18,18 @@ import { AuthContext } from "./AuthContext";
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-export default nav = () => {
+const nav = () => {
   const [userToken, setUserToken] = useState(null);
 
   const authMemo = React.useMemo(() => {
     return {
-      signIn: () => {
-        setUserToken("id");
+      signIn: (email, password) => {
+        if (email == "promatsakpo@gmail.com" && password == "qwerty") {
+          setUserToken("id");
+          console.log("email : " + email + " password : " + password);
+        } else {
+          console.log("email and password not valid");
+        }
       },
       signUp: () => {
         setUserToken("id");
@@ -77,3 +82,4 @@ export default nav = () => {
     </NavigationContainer>
   );
 };
+export default nav;

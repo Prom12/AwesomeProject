@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -12,6 +12,7 @@ import Head from "./RepeatedComponents/Head";
 import Card from "./RepeatedComponents/Card";
 import { AuthContext } from "../AuthContext";
 import { categories } from "../constants/categories";
+import axios from "../constants/axios";
 
 function MainPage({ navigation }) {
   const { signOut } = React.useContext(AuthContext);

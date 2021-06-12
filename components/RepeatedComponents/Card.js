@@ -5,7 +5,9 @@ const Card = (props) => (
   <View style={styles.card}>
     <Image
       style={styles.image}
-      source={require("../../assets/internal.jpg")} //change the require to {uri:props.image} for some weird reason the images online aren't showing;
+      source={{
+        uri: `${props.image}`,
+      }} //change the require to {uri:props.image} for some weird reason the images online aren't showing;
     ></Image>
     <View style={styles.textCard}>
       <Text style={styles.food}>{props.title}</Text>
