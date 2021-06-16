@@ -15,9 +15,10 @@ import {
 
 function Profile({ navigation }) {
   const [edit, setEdit] = useState(true);
+  let ID = "60c8b2fff892811784201d97";
   useEffect(() => {
     async function getProfile() {
-      const data = await axios.get("/profiles/60c8b2fff892811784201d97");
+      const data = await axios.get(`/profiles/${ID}`);
       setProfile({
         name: data.data.name,
         username: data.data.username,
@@ -30,12 +31,10 @@ function Profile({ navigation }) {
     getProfile();
   }, []);
   async function saveProfile() {
-    const data = await axios
-      .put("/profiles/60c8b2fff892811784201d97", profile)
-      .then((dat) => {
-        console.log(dat.data);
-        setE(!e);
-      });
+    const data = await axios.put(`/profiles/${ID}`, profile).then((dat) => {
+      console.log(dat.data);
+      setE(!e);
+    });
   }
   const [profile, setProfile] = useState({
     name: "",
