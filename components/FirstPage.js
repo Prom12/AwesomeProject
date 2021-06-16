@@ -16,6 +16,14 @@ import axios from "../constants/axios";
 
 function MainPage({ navigation }) {
   const { signOut } = React.useContext(AuthContext);
+  const [info, setInfo] = useState([]);
+  useEffect(() => {
+    async function getData() {
+      const data = await axios.get("/products");
+      setInfo(data.data);
+    }
+    getData();
+  });
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -33,12 +41,12 @@ function MainPage({ navigation }) {
       <ScrollView>
         <Head name="Categories"></Head>
         <FlatList
-          data={categories}
+          data={info}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={(itemData) => (
             <TouchableOpacity
-              keyExtractor={itemData.item.key.toString()}
+              keyExtractor={itemData.item.id}
               onPress={() => {
                 navigation.navigate("H", {
                   id: itemData.item.key,

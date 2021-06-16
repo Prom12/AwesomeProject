@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "../../constants/axios.js";
+import React, { useState, useEffect } from "react";
 import {
   StatusBar,
   View,
@@ -14,12 +15,35 @@ import {
 
 function Profile({ navigation }) {
   const [edit, setEdit] = useState(true);
+  useEffect(() => {
+    async function getProfile() {
+      const data = await axios.get("/profiles/60c8b2fff892811784201d97");
+      setProfile({
+        name: data.data.name,
+        username: data.data.username,
+        age: data.data.age,
+        email: data.data.email,
+        password: data.data.password,
+        image: data.data.image,
+      });
+    }
+    getProfile();
+  }, []);
+  async function saveProfile() {
+    const data = await axios
+      .put("/profiles/60c8b2fff892811784201d97", profile)
+      .then((dat) => {
+        console.log(dat.data);
+        setE(!e);
+      });
+  }
   const [profile, setProfile] = useState({
-    name: "Prom Alo",
-    userName: "prom",
-    age: "12",
-    email: "prom@gmail.com",
-    password: "12345",
+    name: "",
+    username: "",
+    age: "",
+    email: "",
+    password: "",
+    image: "",
   });
 
   //added this
@@ -38,8 +62,13 @@ function Profile({ navigation }) {
   //Edit function
   const Edit = () => {
     if (edit) {
+      console.log(profile);
+
       setEdit(!edit);
     } else {
+      console.log(profile);
+      saveProfile();
+      console.log("profile");
       setEdit(!edit);
     }
   };
@@ -50,15 +79,14 @@ function Profile({ navigation }) {
       <View style={styles.imageBody}>
         <Image
           style={styles.image}
-          source={{
-            uri: "https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/ke17ZwdGBToddI8pDm48kGfiFqkITS6axXxhYYUCnlRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpxQ1ibo-zdhORxWnJtmNCajDe36aQmu-4Z4SFOss0oowgxUaachD66r8Ra2gwuBSqM/icon.png?format=1000w",
-          }}
+          alt="alt"
+          source={{ uri: `${profile.image}` }}
         />
       </View>
       {edit ? (
         <View style={styles.content}>
           <Text style={styles.text}>{profile.name}</Text>
-          <Text style={styles.text}>{profile.userName}</Text>
+          <Text style={styles.text}>{profile.username}</Text>
           <Text style={styles.text}>{profile.age}</Text>
           <Text style={styles.text}>{profile.email}</Text>
         </View>
@@ -74,11 +102,11 @@ function Profile({ navigation }) {
               onChangeText={(text) => setProfile({ ...profile, name: text })}
             ></TextInput>
             <TextInput
-              value={profile.userName}
+              value={profile.username}
               style={styles.text}
               placeholder="User name"
               onChangeText={(text) =>
-                setProfile({ ...profile, userName: text })
+                setProfile({ ...profile, username: text })
               }
             ></TextInput>
             <TextInput
