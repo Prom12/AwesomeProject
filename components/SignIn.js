@@ -31,17 +31,20 @@ const SignIn = ({ navigation }) => {
         source={require("../assets/favicon.png")}
       />
       <View style={{ width: "80%" }}>
+        {!email ? <Text style={styles.block}>Incorrect Credentials</Text> : ""}
         <Input onChangeText={emailInput} placeholder="Email" />
-        <Text style={styles.none}>email wrong</Text>
-
         <Input
           onChangeText={passwordInput}
-          secureTextEntry={true}
+          secure="true"
           placeholder="Password"
         />
       </View>
-      <View style={styles.button}>
-        <Button onPress={() => signIn(email, password)} title="Sign In" />
+      <View style={styles.buttons}>
+        <Button
+          style={{ borderRadius: 15 }}
+          onPress={() => signIn(email, password)}
+          title="Sign In"
+        />
         <Button onPress={() => navigation.push("SignUp")} title="Sign Up" />
       </View>
     </View>
@@ -58,13 +61,20 @@ const styles = StyleSheet.create({
     height: Dimensions.get("screen").height,
   },
 
-  button: {
+  buttons: {
     flexDirection: "row",
     justifyContent: "space-between",
     margin: 8,
     width: "40%",
+    borderRadius: 5,
   },
-  none: {
-    display: "none",
+  block: {
+    display: "block",
+    backgroundColor: "red",
+    color: "white",
+    weight: "bold",
+    textAlign: "center",
+    borderRadius: 5,
+    padding: 5,
   },
 });

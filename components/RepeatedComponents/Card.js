@@ -26,11 +26,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     margin: 10,
     borderRadius: 7,
+    overflow: "hidden",
   },
   image: {
     width: "100%",
     height: 150,
     resizeMode: "cover",
+    objectFit: "contain",
   },
   textCard: {
     padding: 3,

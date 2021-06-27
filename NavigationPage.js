@@ -24,7 +24,7 @@ const nav = () => {
   const authMemo = React.useMemo(() => {
     return {
       signIn: (email, password) => {
-        if (email == "promatsakpo@gmail.com" && password == "qwerty") {
+        if (email == "p" && password == "q") {
           setUserToken("id");
         } else {
           console.log("email and password not valid");
@@ -61,14 +61,14 @@ const nav = () => {
               }}
             />
             <Drawer.Screen
-              name="H"
-              component={Screen2}
-              options={{ headerShown: "true" }}
-            />
-            <Drawer.Screen
               name="Something"
               component={Screen3}
               options={{ headerShown: "true" }}
+            />
+            <Drawer.Screen
+              name="H"
+              component={Screen2}
+              options={{ title: null, drawerLabel: () => null }}
             />
           </Drawer.Navigator>
         ) : (

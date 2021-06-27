@@ -6,6 +6,7 @@ const Input = (props) => {
     <TextInput
       onChangeText={props.onChangeText}
       style={styles.input}
+      secureTextEntry={props.secure}
       placeholder={props.placeholder}
     ></TextInput>
   );
@@ -14,10 +15,11 @@ const Input = (props) => {
 const styles = StyleSheet.create({
   input: {
     padding: 4,
-    borderBottomWidth: 2,
-    borderBottomColor: "gray",
+    borderWidth: 1,
+    borderColor: "gray",
     marginBottom: 5,
     marginTop: 3,
+    borderRadius: 5,
   },
 });
 

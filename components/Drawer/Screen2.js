@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     height: "50%",
     paddingHorizontal: 10,
     borderRadius: 5,
+    position: "relative",
   },
   detail: {
     flex: 1,
@@ -68,6 +69,9 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: "blue",
     borderRadius: 10,
+    bottom: 0,
+    right: 0,
+    position: "absolute",
     maxHeight: 30,
     marginRight: 2,
     minWidth: 30,

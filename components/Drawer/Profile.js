@@ -15,7 +15,7 @@ import {
 
 function Profile({ navigation }) {
   const [edit, setEdit] = useState(true);
-  let ID = "60c8b2fff892811784201d97";
+  let ID = "60d8add9e49e43259871ef88";
   useEffect(() => {
     async function getProfile() {
       const data = await axios.get(`/profiles/${ID}`);
@@ -24,50 +24,41 @@ function Profile({ navigation }) {
         username: data.data.username,
         age: data.data.age,
         email: data.data.email,
+        number: data.data.number,
         password: data.data.password,
         image: data.data.image,
       });
     }
     getProfile();
-  }, []);
+  }, [profile]);
+
   async function saveProfile() {
     const data = await axios.put(`/profiles/${ID}`, profile).then((dat) => {
       console.log(dat.data);
-      setE(!e);
     });
   }
-  const [profile, setProfile] = useState({
-    name: "",
-    username: "",
-    age: "",
-    email: "",
-    password: "",
-    image: "",
-  });
+
+  const [profile, setProfile] = useState({});
 
   //added this
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          style={{ borderWidth: 1, padding: 5, margin: 7, borderRadius: 5 }}
-          onPress={Edit}
-        >
-          <Text>{edit ? "Edit" : "Save"}</Text>
-        </TouchableOpacity>
-      ),
-    });
-  }, [edit]);
+
+  navigation.setOptions({
+    headerRight: () => (
+      <TouchableOpacity
+        style={{ borderWidth: 1, padding: 5, margin: 7, borderRadius: 5 }}
+        onPress={Edit}
+      >
+        <Text>{edit ? "Edit" : "Save"}</Text>
+      </TouchableOpacity>
+    ),
+  });
+
   //Edit function
   const Edit = () => {
     if (edit) {
-      console.log(profile);
-
       setEdit(!edit);
     } else {
-      console.log(profile);
       saveProfile();
-      console.log("profile");
       setEdit(!edit);
     }
   };
@@ -88,6 +79,7 @@ function Profile({ navigation }) {
           <Text style={styles.text}>{profile.username}</Text>
           <Text style={styles.text}>{profile.age}</Text>
           <Text style={styles.text}>{profile.email}</Text>
+          <Text style={styles.text}>{profile.number}</Text>
         </View>
       ) : (
         <View
@@ -98,12 +90,14 @@ function Profile({ navigation }) {
               value={profile.name}
               style={styles.text}
               placeholder="Name"
+              autoCapitalize="sentences"
               onChangeText={(text) => setProfile({ ...profile, name: text })}
             ></TextInput>
             <TextInput
               value={profile.username}
               style={styles.text}
               placeholder="User name"
+              textContentType="username"
               onChangeText={(text) =>
                 setProfile({ ...profile, username: text })
               }
@@ -118,13 +112,23 @@ function Profile({ navigation }) {
               value={profile.email}
               style={styles.text}
               placeholder="Email"
+              autoCompleteType="email"
+              textContentType="emailAddress"
               onChangeText={(text) => setProfile({ ...profile, email: text })}
+            ></TextInput>
+            <TextInput
+              value={profile.number}
+              style={styles.text}
+              placeholder="Phone number"
+              keyboardType="numeric"
+              onChangeText={(text) => setProfile({ ...profile, number: text })}
             ></TextInput>
             <TextInput
               value={profile.password}
               style={styles.text}
               secureTextEntry={true}
               placeholder="Password"
+              textContentType="password"
               onChangeText={(text) =>
                 setProfile({ ...profile, password: text })
               }
@@ -184,5 +188,11 @@ const styles = StyleSheet.create({
   buttonInfo: {
     borderRadius: 20,
     backgroundColor: "white",
+  },
+  none: {
+    display: "none",
+  },
+  block: {
+    display: "block",
   },
 });
