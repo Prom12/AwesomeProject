@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Button,
-  StyleSheet,
-  Image,
-  Text,
-  Dimensions,
-} from "react-native";
+import { View, StyleSheet, Image, Text, Dimensions } from "react-native";
 import Input from "./RepeatedComponents/Input";
 import { AuthContext } from "../AuthContext";
 
@@ -30,23 +23,37 @@ const SignIn = ({ navigation }) => {
         height="40"
         source={require("../assets/favicon.png")}
       />
-      <View style={{ width: "80%" }}>
-        {!email ? <Text style={styles.block}>Incorrect Credentials</Text> : ""}
+      <View style={{ width: "90%" }}>
+        {!email ? (
+          <Text style={styles.block}>Incorrect Credentials</Text>
+        ) : (
+          <Text></Text>
+        )}
         <Input onChangeText={emailInput} placeholder="Email" />
-        <Input
-          onChangeText={passwordInput}
-          secure="true"
-          placeholder="Password"
-        />
+        <Input onChangeText={passwordInput} secure placeholder="Password" />
       </View>
       <View style={styles.buttons}>
-        <Button
-          style={{ borderRadius: 15 }}
+        <Text
+          style={{
+            borderRadius: 5,
+            color: "#1A6761",
+            padding: 10,
+            borderWidth: 1,
+            fontSize: 15,
+            borderColor: "gray",
+            backgroundColor: "white",
+          }}
           onPress={() => signIn(email, password)}
-          title="Sign In"
-        />
-        <Button onPress={() => navigation.push("SignUp")} title="Sign Up" />
+        >
+          Sign In
+        </Text>
       </View>
+      <Text
+        onPress={() => navigation.push("SignUp")}
+        style={{ color: "gray", fontSize: 15 }}
+      >
+        Already registered? SignUp
+      </Text>
     </View>
   );
 };
@@ -54,25 +61,25 @@ export default SignIn;
 
 const styles = StyleSheet.create({
   page: {
+    fontFamily: "Cambria",
     alignItems: "center",
     paddingTop: "50%",
-    margin: 1,
     width: Dimensions.get("screen").width,
     height: Dimensions.get("screen").height,
   },
 
   buttons: {
     flexDirection: "row",
-    justifyContent: "space-between",
     margin: 8,
     width: "40%",
     borderRadius: 5,
+    justifyContent: "center",
   },
   block: {
-    display: "block",
+    display: "flex",
     backgroundColor: "red",
     color: "white",
-    weight: "bold",
+    fontWeight: "bold",
     textAlign: "center",
     borderRadius: 5,
     padding: 5,

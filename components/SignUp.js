@@ -21,10 +21,15 @@ function SignUp({ navigation }) {
   navigation.setOptions({
     headerRight: () => (
       <TouchableOpacity
-        style={{ borderWidth: 1, padding: 5, margin: 7, borderRadius: 5 }}
+        style={{
+          borderWidth: 1,
+          padding: 5,
+          margin: 7,
+          borderRadius: 5,
+        }}
         onPress={Save}
       >
-        <Text>Save</Text>
+        <Text style={{ color: "#1A6761" }}>Save</Text>
       </TouchableOpacity>
     ),
   });
@@ -52,7 +57,14 @@ function SignUp({ navigation }) {
   }
   return (
     <View style={styles.body}>
-      <View style={{ height: "15%", alignContent: "center", width: "100%" }}>
+      <View
+        style={{
+          height: "15%",
+          alignContent: "center",
+          width: "100%",
+          marginBottom: 20,
+        }}
+      >
         <Image
           style={{
             height: "100%",
@@ -66,12 +78,17 @@ function SignUp({ navigation }) {
         ></Image>
       </View>
 
-      <View style={{ height: "50%" }}>
+      <View
+        style={{
+          height: "75%",
+          width: "96%",
+        }}
+      >
         <View style={styles.content}>
           <TextInput
             value={profile.name}
             style={styles.text}
-            placeholder="Name : Akut3k Amos"
+            placeholder="Name : Akutek Amos"
             onChangeText={(text) => setProfile({ ...profile, name: text })}
           ></TextInput>
           <TextInput
@@ -119,27 +136,27 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   body: {
+    alignItems: "center",
     marginTop: 30,
+    width: "100%",
     height: "100%",
   },
-  button: {
-    width: "100%",
-    alignItems: "center",
-    height: "20%",
-  },
   content: {
-    marginTop: "10%",
-    width: "100%",
+    width: "99%",
+    borderWidth: 3,
+    borderStyle: "dotted",
+    borderColor: "#10F1E1",
     alignItems: "center",
-    height: "65%",
+    height: "100%",
   },
   text: {
-    width: "90%",
+    width: "95%",
     fontSize: 20,
     borderBottomWidth: 1,
     padding: 10,
     borderBottomColor: "gray",
-    margin: 5,
+    marginTop: 5,
+    marginBottom: 5,
     backgroundColor: "#D3D3D3",
     borderRadius: 5,
   },

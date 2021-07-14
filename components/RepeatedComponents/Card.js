@@ -7,7 +7,7 @@ const Card = (props) => (
       style={styles.image}
       source={{
         uri: `${props.image}`,
-      }} //change the require to {uri:props.image} for some weird reason the images online aren't showing;
+      }}
     ></Image>
     <View style={styles.textCard}>
       <Text style={styles.food}>{props.title}</Text>
@@ -19,7 +19,7 @@ export default Card;
 
 const styles = StyleSheet.create({
   card: {
-    width: 160,
+    width: 188,
     borderWidth: 1,
     borderColor: "#D3D3D3",
     height: 210,
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 150,
     resizeMode: "cover",
-    objectFit: "contain",
   },
   textCard: {
     padding: 3,

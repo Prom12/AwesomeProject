@@ -9,15 +9,20 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  Button,
   TextInput,
 } from "react-native";
 
+import * as ImagePicker from "expo-image-picker";
+
 function Profile({ navigation }) {
   const [edit, setEdit] = useState(true);
+  const [image, setImage] = useState(null);
+  const [profile, setProfile] = useState({});
   let ID = "60d8add9e49e43259871ef88";
+
+  //Loading Data on Load
   useEffect(() => {
-    async function getProfile() {
+    (async () => {
       const data = await axios.get(`/profiles/${ID}`);
       setProfile({
         name: data.data.name,
@@ -28,20 +33,51 @@ function Profile({ navigation }) {
         password: data.data.password,
         image: data.data.image,
       });
-    }
-    getProfile();
+    })();
   }, [profile]);
 
+  //Asking for camera permissions
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, you need to accept camera permissions");
+        }
+      }
+    })();
+  }, []);
+
+  //Function to move from Edit to Save
   async function saveProfile() {
-    const data = await axios.put(`/profiles/${ID}`, profile).then((dat) => {
-      console.log(dat.data);
-    });
+    const data = await axios
+      .put(`/profiles/${ID}`, profile)
+      .then((dat) => {
+        setProfile(dat.data);
+        alert("Saved");
+        setEdit(!edit);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   }
 
-  const [profile, setProfile] = useState({});
+  // Image Selection Function
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      quality: 1,
+    });
 
-  //added this
+    if (!result.cancelled) {
+      setImage(result.uri);
+      setProfile({ ...profile, image: result.uri });
+    }
+  };
 
+  //Top section of navBar Edit and Save
   navigation.setOptions({
     headerRight: () => (
       <TouchableOpacity
@@ -59,82 +95,94 @@ function Profile({ navigation }) {
       setEdit(!edit);
     } else {
       saveProfile();
-      setEdit(!edit);
     }
   };
 
   return (
     //Entire Body
     <View style={styles.body}>
-      <View style={styles.imageBody}>
-        <Image
-          style={styles.image}
-          alt="alt"
-          source={{ uri: `${profile.image}` }}
-        />
-      </View>
       {edit ? (
-        <View style={styles.content}>
-          <Text style={styles.text}>{profile.name}</Text>
-          <Text style={styles.text}>{profile.username}</Text>
-          <Text style={styles.text}>{profile.age}</Text>
-          <Text style={styles.text}>{profile.email}</Text>
-          <Text style={styles.text}>{profile.number}</Text>
-        </View>
-      ) : (
-        <View
-          style={{ flexDirection: "column", alignContent: "space-between" }}
-        >
-          <View style={styles.content}>
-            <TextInput
-              value={profile.name}
-              style={styles.text}
-              placeholder="Name"
-              autoCapitalize="sentences"
-              onChangeText={(text) => setProfile({ ...profile, name: text })}
-            ></TextInput>
-            <TextInput
-              value={profile.username}
-              style={styles.text}
-              placeholder="User name"
-              textContentType="username"
-              onChangeText={(text) =>
-                setProfile({ ...profile, username: text })
-              }
-            ></TextInput>
-            <TextInput
-              value={profile.age}
-              style={styles.text}
-              placeholder="Age"
-              onChangeText={(text) => setProfile({ ...profile, age: text })}
-            ></TextInput>
-            <TextInput
-              value={profile.email}
-              style={styles.text}
-              placeholder="Email"
-              autoCompleteType="email"
-              textContentType="emailAddress"
-              onChangeText={(text) => setProfile({ ...profile, email: text })}
-            ></TextInput>
-            <TextInput
-              value={profile.number}
-              style={styles.text}
-              placeholder="Phone number"
-              keyboardType="numeric"
-              onChangeText={(text) => setProfile({ ...profile, number: text })}
-            ></TextInput>
-            <TextInput
-              value={profile.password}
-              style={styles.text}
-              secureTextEntry={true}
-              placeholder="Password"
-              textContentType="password"
-              onChangeText={(text) =>
-                setProfile({ ...profile, password: text })
-              }
-            ></TextInput>
+        <>
+          {/* Normal Section  */}
+          <View style={styles.imageBody}>
+            <Image
+              style={styles.image}
+              alt="alt"
+              source={{ uri: `${profile.image}` }}
+            />
           </View>
-        </View>
+          <View style={styles.content}>
+            <Text style={styles.text}>{profile.name}</Text>
+            <Text style={styles.text}>{profile.username}</Text>
+            <Text style={styles.text}>{profile.age}</Text>
+            <Text style={styles.text}>{profile.email}</Text>
+            <Text style={styles.text}>{profile.number}</Text>
+          </View>
+        </>
+      ) : (
+        <>
+          {/* Edit Section */}
+          <TouchableOpacity style={styles.imageBody} onPress={pickImage}>
+            {image && (
+              <Image style={styles.image} alt="alt" source={{ uri: image }} />
+            )}
+          </TouchableOpacity>
+          <View
+            style={{ flexDirection: "column", alignContent: "space-between" }}
+          >
+            <View style={styles.content}>
+              <TextInput
+                value={profile.name}
+                style={styles.text}
+                placeholder="Name"
+                autoCapitalize="sentences"
+                onChangeText={(text) => setProfile({ ...profile, name: text })}
+              ></TextInput>
+              <TextInput
+                value={profile.username}
+                style={styles.text}
+                placeholder="User name"
+                textContentType="username"
+                onChangeText={(text) =>
+                  setProfile({ ...profile, username: text })
+                }
+              ></TextInput>
+              <TextInput
+                value={profile.age}
+                style={styles.text}
+                placeholder="Age"
+                onChangeText={(text) => setProfile({ ...profile, age: text })}
+              ></TextInput>
+              <TextInput
+                value={profile.email}
+                style={styles.text}
+                placeholder="Email"
+                autoCompleteType="email"
+                textContentType="emailAddress"
+                onChangeText={(text) => setProfile({ ...profile, email: text })}
+              ></TextInput>
+              <TextInput
+                value={profile.number}
+                style={styles.text}
+                placeholder="Phone number"
+                keyboardType="numeric"
+                onChangeText={(text) =>
+                  setProfile({ ...profile, number: text })
+                }
+              ></TextInput>
+              <TextInput
+                value={profile.password}
+                style={styles.text}
+                secureTextEntry={true}
+                placeholder="Password"
+                textContentType="password"
+                onChangeText={(text) =>
+                  setProfile({ ...profile, password: text })
+                }
+              ></TextInput>
+            </View>
+          </View>
+        </>
       )}
     </View>
   );
@@ -191,8 +239,5 @@ const styles = StyleSheet.create({
   },
   none: {
     display: "none",
-  },
-  block: {
-    display: "block",
   },
 });
