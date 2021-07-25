@@ -11,7 +11,6 @@ const Card = (props) => (
     ></Image>
     <View style={styles.textCard}>
       <Text style={styles.food}>{props.title}</Text>
-      <Text style={styles.amount}>{props.amount}</Text>
     </View>
   </View>
 );
@@ -19,10 +18,10 @@ export default Card;
 
 const styles = StyleSheet.create({
   card: {
-    width: 188,
+    width: "90%",
     borderWidth: 1,
     borderColor: "#D3D3D3",
-    height: 210,
+    height: "auto",
     backgroundColor: "white",
     margin: 10,
     borderRadius: 7,
@@ -30,21 +29,15 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 150,
+    height: 155,
     resizeMode: "cover",
   },
   textCard: {
-    padding: 3,
-    height: 60,
+    padding: 5,
   },
   food: {
     fontWeight: "500",
     fontSize: 20,
-    textAlign: "left",
-  },
-  amount: {
-    fontWeight: "500",
-    fontSize: 15,
-    textAlign: "left",
+    textAlign: "center",
   },
 });

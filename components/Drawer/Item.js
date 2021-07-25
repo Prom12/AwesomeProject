@@ -55,7 +55,11 @@ export default function Item({ route, navigation }) {
                 onPress={() => {
                   navigation.navigate("MainPage");
                 }}
-                style={{ color: "#10F1E1", fontSize: 30, textAlign: "center" }}
+                style={{
+                  color: "#10F1E1",
+                  fontSize: 30,
+                  textAlign: "center",
+                }}
               >
                 Add To Cart
               </Text>
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   bottomView: {
-    height: "20%",
+    height: "18%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     backgroundColor: "white",
@@ -98,15 +102,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
     alignSelf: "center",
+    textAlign: "center",
+    alignContent: "center",
     marginTop: 2,
     width: "90%",
   },
   add: {
-    padding: 10,
     fontWeight: "bold",
     backgroundColor: "blue",
     borderRadius: 10,
-    height: "90%",
+    padding: 10,
   },
   title: {
     marginTop: "5%",

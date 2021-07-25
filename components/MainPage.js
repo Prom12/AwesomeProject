@@ -12,20 +12,16 @@ import {
 import Head from "./RepeatedComponents/Head";
 import Card from "./RepeatedComponents/Card";
 import { AuthContext } from "../AuthContext";
-//import { categories } from "../constants/categories";
-import axios from "../constants/axios";
+import { useSelector, useDispatch } from "react-redux";
+import { getProducts } from "../constants/getAxios";
 
 function MainPage({ navigation }) {
   const { signOut } = React.useContext(AuthContext);
-  const [info, setInfo] = useState();
+  const { products } = useSelector((state) => state.productReducer);
+  const dispatch = useDispatch();
+  const fetchProducts = () => dispatch(getProducts());
   useEffect(() => {
-    async function getData() {
-      await axios
-        .get("/products")
-        .then((data) => setInfo(data.data))
-        .catch((err) => alert(err.message));
-    }
-    getData();
+    fetchProducts();
   }, []);
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -41,37 +37,36 @@ function MainPage({ navigation }) {
   }, [navigation]);
   return (
     <View style={styles.body}>
-      <ScrollView>
-        <Head name="Categories"></Head>
-        <FlatList
-          data={info}
-          horizontal={false}
-          numColumns={2}
-          ListEmptyComponent={<Text>Loading Data.................</Text>}
-          showsHorizontalScrollIndicator={false}
-          renderItem={(itemData) => (
-            <TouchableOpacity
-              keyExtractor={(item) => item.item.key.toString()}
-              onPress={() => {
-                navigation.navigate("Item", {
-                  id: itemData.item.key,
-                  image: itemData.item.image,
-                  title: itemData.item.title,
-                  amount: itemData.item.amount,
-                  detail: itemData.item.detail,
-                });
-              }}
-            >
-              <Card
-                image={itemData.item.image}
-                title={itemData.item.title}
-                amount={itemData.item.amount}
-                detail={itemData.item.detail}
-              ></Card>
-            </TouchableOpacity>
-          )}
-        ></FlatList>
-      </ScrollView>
+      <Head name="Categories"></Head>
+      <FlatList
+        data={products}
+        horizontal={false}
+        numColumns={2}
+        ListEmptyComponent={<Text>Loading Data.................</Text>}
+        showsHorizontalScrollIndicator={false}
+        renderItem={(itemData) => (
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => {
+              navigation.navigate("Item", {
+                id: itemData.item.key,
+                image: itemData.item.image,
+                title: itemData.item.title,
+                amount: itemData.item.amount,
+                detail: itemData.item.detail,
+              });
+            }}
+          >
+            <Card
+              image={itemData.item.image}
+              title={itemData.item.title}
+              amount={itemData.item.amount}
+              detail={itemData.item.detail}
+            ></Card>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(itemData, index) => index.toString()}
+      ></FlatList>
     </View>
   );
 }
@@ -84,5 +79,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: Dimensions.get("screen").width,
     height: Dimensions.get("screen").height,
+  },
+  card: {
+    width: Dimensions.get("screen").width / 2,
   },
 });

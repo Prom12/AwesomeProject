@@ -1,4 +1,4 @@
-import axios from "../../constants/axios.js";
+//import axios from "../../constants/axios.js";
 import React, { useState, useEffect } from "react";
 import {
   StatusBar,
@@ -11,30 +11,23 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getProfiles } from "../../constants/getAxios";
 import * as ImagePicker from "expo-image-picker";
 
 function Profile({ navigation }) {
   const [edit, setEdit] = useState(true);
   const [image, setImage] = useState(null);
   const [profile, setProfile] = useState({});
-  let ID = "60d8add9e49e43259871ef88";
+  const { profiles } = useSelector((state) => state.profilesReducer);
+  const dispatch = useDispatch();
+  const fetchProfile = () => dispatch(getProfiles());
+  //let ID = "60d8add9e49e43259871ef88";
 
   //Loading Data on Load
   useEffect(() => {
-    (async () => {
-      const data = await axios.get(`/profiles/${ID}`);
-      setProfile({
-        name: data.data.name,
-        username: data.data.username,
-        age: data.data.age,
-        email: data.data.email,
-        number: data.data.number,
-        password: data.data.password,
-        image: data.data.image,
-      });
-    })();
-  }, [profile]);
+    fetchProfile().then(alert(profiles.name));
+  }, []);
 
   //Asking for camera permissions
   useEffect(() => {
@@ -73,7 +66,6 @@ function Profile({ navigation }) {
 
     if (!result.cancelled) {
       setImage(result.uri);
-      setProfile({ ...profile, image: result.uri });
     }
   };
 
@@ -108,15 +100,15 @@ function Profile({ navigation }) {
             <Image
               style={styles.image}
               alt="alt"
-              source={{ uri: `${profile.image}` }}
+              source={{ uri: `${profiles.image}` }}
             />
           </View>
           <View style={styles.content}>
-            <Text style={styles.text}>{profile.name}</Text>
-            <Text style={styles.text}>{profile.username}</Text>
-            <Text style={styles.text}>{profile.age}</Text>
-            <Text style={styles.text}>{profile.email}</Text>
-            <Text style={styles.text}>{profile.number}</Text>
+            <Text style={styles.text}>{profiles.name}</Text>
+            <Text style={styles.text}>{profiles.username}</Text>
+            <Text style={styles.text}>{profiles.age}</Text>
+            <Text style={styles.text}>{profiles.email}</Text>
+            <Text style={styles.text}>{profiles.number}</Text>
           </View>
         </>
       ) : (
