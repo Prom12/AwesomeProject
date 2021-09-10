@@ -18,21 +18,24 @@ function SignUp({ navigation }) {
     password: "",
     email: "",
   });
-  navigation.setOptions({
-    headerRight: () => (
-      <TouchableOpacity
-        style={{
-          borderWidth: 1,
-          padding: 5,
-          margin: 7,
-          borderRadius: 5,
-        }}
-        onPress={Save}
-      >
-        <Text style={{ color: "#1A6761" }}>Save</Text>
-      </TouchableOpacity>
-    ),
-  });
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{
+            borderWidth: 1,
+            padding: 5,
+            margin: 7,
+            borderRadius: 5,
+          }}
+          onPress={Save}
+        >
+          <Text style={{ color: "#1A6761" }}>Save</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
+
   async function Save() {
     if (
       profile.name == null ||
@@ -108,6 +111,7 @@ function SignUp({ navigation }) {
             value={profile.email}
             style={styles.text}
             textContentType="emailAddress"
+            keyboardType="email-address"
             placeholder="Email : amos@gmail.com"
             onChangeText={(text) => setProfile({ ...profile, email: text })}
           ></TextInput>
@@ -115,7 +119,7 @@ function SignUp({ navigation }) {
             value={profile.number}
             style={styles.text}
             textContentType="telephoneNumber"
-            keyboardType="numeric"
+            keyboardType="number-pad"
             placeholder="Phone Number : 020xxxxxxx"
             onChangeText={(text) => setProfile({ ...profile, number: text })}
           ></TextInput>

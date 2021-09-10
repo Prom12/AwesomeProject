@@ -1,0 +1,6 @@
+export const Auth = {
+  RETRIEVE_TOKEN: "RETRIEVE_TOKEN",
+  SIGN_IN: "SIGN_IN",
+  SIGN_OUT: "SIGN_OUT",
+  SIGN_UP: "SIGN_UP",
+};

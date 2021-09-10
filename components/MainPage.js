@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   FlatList,
@@ -6,8 +6,6 @@ import {
   TouchableOpacity,
   Dimensions,
   Text,
-  ScrollView,
-  SafeAreaView,
 } from "react-native";
 import Head from "./RepeatedComponents/Head";
 import Card from "./RepeatedComponents/Card";

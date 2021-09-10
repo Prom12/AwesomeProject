@@ -14,10 +14,14 @@ import Item from "./components/Drawer/Item";
 import Screen3 from "./components/Drawer/Screen3";
 
 import { AuthContext } from "./AuthContext";
+import { loginReducer, initialLoginState } from "./redux/reducers/auth";
+import { Auth } from "./redux/actions/auth";
+import { useSelector, useDispatch } from "react-redux";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 const DrawerStack2 = createStackNavigator();
+
 const DrawerStack2Screen = () => (
   <DrawerStack2.Navigator>
     <DrawerStack2.Screen
@@ -40,22 +44,25 @@ const DrawerStack2Screen = () => (
 );
 
 const nav = () => {
-  const [userToken, setUserToken] = useState(null);
+  const dispatch = useDispatch();
+  const { userToken } = useSelector((state) => state.authReducer);
 
   const authMemo = React.useMemo(() => {
     return {
       signIn: (email, password) => {
+        let userToken = null;
         if (email == null && password == null) {
-          setUserToken("id");
+          userToken = "id";
+          dispatch({ type: Auth.SIGN_IN, id: email, token: userToken });
         } else {
           console.log("email and password not valid");
         }
       },
       signUp: () => {
-        setUserToken("id");
+        dispatch({ type: Auth.SIGN_UP });
       },
       signOut: () => {
-        setUserToken(null);
+        dispatch({ type: Auth.SIGN_OUT });
       },
     };
   }, []);
@@ -74,7 +81,7 @@ const nav = () => {
             />
             <Drawer.Screen name="Main" component={DrawerStack2Screen} />
             <Drawer.Screen
-              name="Something"
+              name="Cart"
               component={Screen3}
               options={{ headerShown: true }}
             />
