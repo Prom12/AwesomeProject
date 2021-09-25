@@ -59,7 +59,7 @@ const nav = () => {
     })();
   }, []);
 
-  const authMemo = React.useMemo((profiles) => {
+  const authMemo = React.useMemo(() => {
     return {
       signIn: (email, password) => {
         let userToken = null;
@@ -76,13 +76,6 @@ const nav = () => {
             });
         };
         signIn1();
-
-        // var prod = profiles.filter((auth) => auth.email == email);
-        //if (prod.password == password) {
-
-        //} else {
-
-        // }
       },
       signUp: () => {
         dispatch({ type: Auth.SIGN_UP });
