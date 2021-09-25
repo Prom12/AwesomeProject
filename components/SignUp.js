@@ -11,15 +11,15 @@ import axios from "../constants/axios.js";
 
 function SignUp({ navigation }) {
   const [profile, setProfile] = useState({
-    name: "as",
-    userName: "user1",
-    email: "afd@gmail.com",
-    password: "12345",
-    password_confirmation: "12345",
-    mobile: "0255455557",
-    picture: "qwerty",
-    description: "none",
-    active: "False",
+    name: "",
+    userName: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+    mobile: "",
+    picture: "",
+    description: "",
+    active: "true",
     vendor: "False",
   });
   React.useLayoutEffect(() => {
