@@ -11,12 +11,16 @@ import axios from "../constants/axios.js";
 
 function SignUp({ navigation }) {
   const [profile, setProfile] = useState({
-    name: "",
-    username: "",
-    age: "",
-    number: "",
-    password: "",
-    email: "",
+    name: "as",
+    userName: "user1",
+    email: "afd@gmail.com",
+    password: "12345",
+    password_confirmation: "12345",
+    mobile: "0255455557",
+    picture: "qwerty",
+    description: "none",
+    active: "False",
+    vendor: "False",
   });
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -37,26 +41,16 @@ function SignUp({ navigation }) {
   }, []);
 
   async function Save() {
-    if (
-      profile.name == null ||
-      profile.username == null ||
-      profile.email == null ||
-      profile.age == null ||
-      profile.password == null ||
-      profile.number.length < 7
-    ) {
-      alert("Please, no field can be left empty");
-    } else {
-      await axios
-        .post("/profiles", profile)
-        .then(() => {
-          alert("Saved");
-          navigation.navigate("SignIn");
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
-    }
+    await axios
+      .post("/register", profile)
+
+      .then((data) => {
+        console.log(data);
+        navigation.navigate("SignIn");
+      })
+      .catch((err) => {
+        alert(err);
+      });
   }
   return (
     <View style={styles.body}>
@@ -94,19 +88,7 @@ function SignUp({ navigation }) {
             placeholder="Name : Akutek Amos"
             onChangeText={(text) => setProfile({ ...profile, name: text })}
           ></TextInput>
-          <TextInput
-            value={profile.username}
-            style={styles.text}
-            textContentType="username"
-            placeholder="User name : Amos"
-            onChangeText={(text) => setProfile({ ...profile, username: text })}
-          ></TextInput>
-          <TextInput
-            value={profile.age}
-            style={styles.text}
-            placeholder="Age : 15"
-            onChangeText={(text) => setProfile({ ...profile, age: text })}
-          ></TextInput>
+
           <TextInput
             value={profile.email}
             style={styles.text}
@@ -116,19 +98,56 @@ function SignUp({ navigation }) {
             onChangeText={(text) => setProfile({ ...profile, email: text })}
           ></TextInput>
           <TextInput
-            value={profile.number}
-            style={styles.text}
-            textContentType="telephoneNumber"
-            keyboardType="number-pad"
-            placeholder="Phone Number : 020xxxxxxx"
-            onChangeText={(text) => setProfile({ ...profile, number: text })}
-          ></TextInput>
-          <TextInput
             value={profile.password}
             style={styles.text}
             secureTextEntry={true}
             placeholder="Password : ***************"
             onChangeText={(text) => setProfile({ ...profile, password: text })}
+          ></TextInput>
+          <TextInput
+            value={profile.password_confirmation}
+            style={styles.text}
+            secureTextEntry={true}
+            placeholder="Password : ***************"
+            onChangeText={(text) =>
+              setProfile({ ...profile, password_confirmation: text })
+            }
+          ></TextInput>
+          <TextInput
+            value={profile.mobile}
+            style={styles.text}
+            textContentType="telephoneNumber"
+            keyboardType="number-pad"
+            placeholder="Phone Number : 020xxxxxxx"
+            onChangeText={(text) => setProfile({ ...profile, mobile: text })}
+          ></TextInput>
+          <TextInput
+            value={profile.picture}
+            style={styles.text}
+            placeholder="picture : 15"
+            onChangeText={(text) => setProfile({ ...profile, picture: text })}
+          ></TextInput>
+          <TextInput
+            value={profile.description}
+            style={styles.text}
+            placeholder="description : 15"
+            onChangeText={(text) =>
+              setProfile({ ...profile, description: text })
+            }
+          ></TextInput>
+          <TextInput
+            value={profile.vendor}
+            style={styles.text}
+            textContentType="username"
+            placeholder="vendor : true"
+            onChangeText={(text) => setProfile({ ...profile, vendor: text })}
+          ></TextInput>
+          <TextInput
+            value={profile.active}
+            style={styles.text}
+            textContentType="username"
+            placeholder="active : true"
+            onChangeText={(text) => setProfile({ ...profile, active: text })}
           ></TextInput>
         </View>
       </View>

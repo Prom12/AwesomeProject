@@ -1,6 +1,6 @@
 // In App.js in a new project
 
-import React, { useState } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -17,6 +17,7 @@ import { AuthContext } from "./AuthContext";
 import { loginReducer, initialLoginState } from "./redux/reducers/auth";
 import { Auth } from "./redux/actions/auth";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "./constants/axios.js";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -46,17 +47,30 @@ const DrawerStack2Screen = () => (
 const nav = () => {
   const dispatch = useDispatch();
   const { userToken } = useSelector((state) => state.authReducer);
+  const { profiles } = useSelector((state) => state.authReducer);
+  React.useEffect(() => {
+    (async () => {
+      await axios
+        .get("/profiles")
+        .then((data) => {
+          dispatch({ type: Auth.GET_PROFILES, payload: data.data });
+        })
+        .catch((err) => alert(err.message));
+    })();
+  }, []);
 
-  const authMemo = React.useMemo(() => {
+  const authMemo = React.useMemo((profiles) => {
     return {
       signIn: (email, password) => {
         let userToken = null;
-        if (email == null && password == null) {
-          userToken = "id";
-          dispatch({ type: Auth.SIGN_IN, id: email, token: userToken });
-        } else {
-          console.log("email and password not valid");
-        }
+        // var prod = profiles.filter((auth) => auth.email == email);
+        //if (prod.password == password) {
+        userToken = "id";
+        alert("dispatch");
+        dispatch({ type: Auth.SIGN_IN, id: email, token: userToken });
+        //} else {
+        console.log("email and password not valid");
+        // }
       },
       signUp: () => {
         dispatch({ type: Auth.SIGN_UP });

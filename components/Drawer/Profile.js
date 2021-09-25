@@ -47,6 +47,7 @@ function Profile({ navigation }) {
   //Function to move from Edit to Save
   async function saveProfile() {
     await axios
+      // url
       .put(`/profiles/${ID}`, profile)
       .then((dat) => {
         setProfile(dat.data);

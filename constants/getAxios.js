@@ -3,7 +3,7 @@ import { Products } from "../redux/actions/product";
 export function getProducts() {
   return async (dispatch) => {
     await axios
-      .get("/products")
+      .get("/vendors")
       .then((data) => {
         dispatch({ type: Products.GET_PRODUCTS, payload: data.data });
       })

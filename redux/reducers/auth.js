@@ -1,5 +1,5 @@
 import { Auth } from "../actions/auth";
-export default authReducer = (prevState = [], action) => {
+const authReducer = (prevState = [], action) => {
   switch (action.type) {
     case Auth.RETRIEVE_TOKEN:
       return { ...prevState, userToken: action.token, isLoading: false };
@@ -9,6 +9,11 @@ export default authReducer = (prevState = [], action) => {
         userName: action.id,
         userToken: action.token,
         isLoading: false,
+      };
+    case Auth.GET_PROFILES:
+      return {
+        ...prevState,
+        profiles: action.payload,
       };
     case Auth.SIGN_OUT:
       return {
@@ -28,3 +33,4 @@ export default authReducer = (prevState = [], action) => {
       return prevState;
   }
 };
+export default authReducer;
