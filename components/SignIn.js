@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, StyleSheet, Image, Text, Dimensions } from "react-native";
 import Input from "./RepeatedComponents/Input";
 import { AuthContext } from "../AuthContext";
-import axios from "../constants/axios.js";
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState(null);
@@ -14,15 +13,6 @@ const SignIn = ({ navigation }) => {
   };
   const passwordInput = (enteredText) => {
     setPassword(enteredText);
-  };
-
-  const signIn1 = async () => {
-    await axios
-      .post("/login", { email, password })
-      .then(() => alert("f u"))
-      .catch((err) => {
-        alert(err);
-      });
   };
 
   return (
@@ -53,7 +43,7 @@ const SignIn = ({ navigation }) => {
             borderColor: "gray",
             backgroundColor: "white",
           }}
-          onPress={signIn1}
+          onPress={() => signIn(email, password)}
         >
           Sign In
         </Text>

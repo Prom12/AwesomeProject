@@ -63,13 +63,25 @@ const nav = () => {
     return {
       signIn: (email, password) => {
         let userToken = null;
+        const signIn1 = async () => {
+          await axios
+            .post("/login", { email, password })
+            .then(() => {
+              userToken = "id";
+              dispatch({ type: Auth.SIGN_IN, id: email, token: userToken });
+            })
+            .catch((err) => {
+              alert(err);
+              console.log("email and password not valid");
+            });
+        };
+        signIn1();
+
         // var prod = profiles.filter((auth) => auth.email == email);
         //if (prod.password == password) {
-        userToken = "id";
-        alert("dispatch");
-        dispatch({ type: Auth.SIGN_IN, id: email, token: userToken });
+
         //} else {
-        console.log("email and password not valid");
+
         // }
       },
       signUp: () => {
