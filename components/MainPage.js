@@ -16,6 +16,7 @@ import { getProducts } from "../constants/getAxios";
 function MainPage({ navigation }) {
   const { signOut } = React.useContext(AuthContext);
   const { products } = useSelector((state) => state.productReducer);
+  const { userToken } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const fetchProducts = () => dispatch(getProducts());
   useEffect(() => {
@@ -26,7 +27,7 @@ function MainPage({ navigation }) {
       headerRight: () => (
         <TouchableOpacity
           style={{ padding: 5, margin: 7, borderRadius: 5 }}
-          onPress={() => signOut()}
+          onPress={() => signOut(userToken)}
         >
           <Text style={{ color: "red" }}>SignOut</Text>
         </TouchableOpacity>

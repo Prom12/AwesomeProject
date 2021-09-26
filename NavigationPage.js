@@ -62,13 +62,17 @@ const nav = () => {
   const authMemo = React.useMemo(() => {
     return {
       signIn: (email, password) => {
-        let userToken = null;
         const signIn1 = async () => {
           await axios
             .post("/login", { email, password })
-            .then(() => {
-              userToken = "id";
-              dispatch({ type: Auth.SIGN_IN, id: email, token: userToken });
+            .then((data) => {
+              console.log(data);
+              alert(data.data.user.vendor);
+              dispatch({
+                type: Auth.SIGN_IN,
+                id: email,
+                token: data.data.token,
+              });
             })
             .catch((err) => {
               alert(err);
@@ -80,8 +84,24 @@ const nav = () => {
       signUp: () => {
         dispatch({ type: Auth.SIGN_UP });
       },
-      signOut: () => {
-        dispatch({ type: Auth.SIGN_OUT });
+      signOut: (userToken) => {
+        alert(userToken);
+        const logout = async () => {
+          await axios
+            .get("/logout", {
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },
+            })
+            .then((data) => {
+              alert(data.data.message);
+              dispatch({ type: Auth.SIGN_OUT });
+            })
+            .catch((err) => {
+              alert(err);
+            });
+        };
+        logout();
       },
     };
   }, []);
