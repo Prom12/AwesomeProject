@@ -56,7 +56,10 @@ export default function Item({ route, navigation }) {
             <View style={styles.add}>
               <Text
                 onPress={() => {
-                  dispatch({ type: Products.CART, payload: route.params });
+                  dispatch({
+                    type: Products.CART,
+                    payload: route.params,
+                  });
                   navigation.navigate("MainPage");
                 }}
                 style={{

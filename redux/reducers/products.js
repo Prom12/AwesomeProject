@@ -10,9 +10,17 @@ function productReducer(
     case Products.CREATE:
       return {};
     case Products.UPDATE:
-      return {};
+      //Currently Under Maintenance
+      product = state.products.filter((post) => post._id == action.payload._id);
+      product = action.payload;
+      state.products.push(product);
+      return { ...state, products };
     case Products.DELETE:
-      return {};
+      const product = state.products.filter(
+        (post) => post._id !== action.payload
+      );
+
+      return { ...state, products: product };
     case Products.CART:
       if (value == 0) {
         cart[0] = action.payload;

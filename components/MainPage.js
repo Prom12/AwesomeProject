@@ -48,7 +48,7 @@ function MainPage({ navigation }) {
             style={styles.card}
             onPress={() => {
               navigation.navigate("Item", {
-                id: itemData.item.key,
+                id: itemData.item._id,
                 image: itemData.item.image,
                 title: itemData.item.title,
                 amount: itemData.item.amount,
