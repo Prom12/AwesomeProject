@@ -47,61 +47,66 @@ const DrawerStack2Screen = () => (
 const nav = () => {
   const dispatch = useDispatch();
   const { userToken } = useSelector((state) => state.authReducer);
-  const { profiles } = useSelector((state) => state.authReducer);
-  React.useEffect(() => {
-    (async () => {
-      await axios
-        .get("/profiles")
-        .then((data) => {
-          dispatch({ type: Auth.GET_PROFILES, payload: data.data });
-        })
-        .catch((err) => alert(err.message));
-    })();
-  }, []);
+  // const { profiles } = useSelector((state) => state.authReducer);
+  // React.useEffect(() => {
+  //   (async () => {
+  //     await axios
+  //       .get("/vendors")
+  //       .then((data) => {
+  //         dispatch({ type: Auth.GET_PROFILES, payload: data.data });
+  //       })
+  //       .catch((err) => alert(err.message));
+  //   })();
+  // }, []);
 
   const authMemo = React.useMemo(() => {
     return {
       signIn: (email, password) => {
-        const signIn1 = async () => {
-          await axios
-            .post("/login", { email, password })
-            .then((data) => {
-              console.log(data);
-              alert(data.data.user.vendor);
-              dispatch({
-                type: Auth.SIGN_IN,
-                id: email,
-                token: data.data.token,
-              });
-            })
-            .catch((err) => {
-              alert(err);
-              console.log("email and password not valid");
-            });
-        };
-        signIn1();
+        // const signIn1 = async () => {
+        //   await axios
+        //     .post("/login", { email, password })
+        //     .then((data) => {
+        //       console.log(data);
+        //       alert(data.data.user.vendor);
+        //       dispatch({
+        //         type: Auth.SIGN_IN,
+        //         id: email,
+        //         token: data.data.token,
+        //       });
+        //     })
+        //     .catch((err) => {
+        //       alert(err);
+        //       console.log("email and password not valid");
+        //     });
+        // };
+        //signIn1();
+        dispatch({
+          type: Auth.SIGN_IN,
+          id: email,
+          token: "id",
+        });
       },
       signUp: () => {
         dispatch({ type: Auth.SIGN_UP });
       },
       signOut: (userToken) => {
-        alert(userToken);
-        const logout = async () => {
-          await axios
-            .get("/logout", {
-              headers: {
-                Authorization: `Bearer ${userToken}`,
-              },
-            })
-            .then((data) => {
-              alert(data.data.message);
-              dispatch({ type: Auth.SIGN_OUT });
-            })
-            .catch((err) => {
-              alert(err);
-            });
-        };
-        logout();
+        // const logout = async () => {
+        //   await axios
+        //     .get("/logout", {
+        //       headers: {
+        //         Authorization: `Bearer ${userToken}`,
+        //       },
+        //     })
+        //     .then((data) => {
+        //       alert(data.data.message);
+        //       dispatch({ type: Auth.SIGN_OUT });
+        //     })
+        //     .catch((err) => {
+        //       alert(err);
+        //     });
+        // };
+        // logout();
+        dispatch({ type: Auth.SIGN_OUT });
       },
     };
   }, []);

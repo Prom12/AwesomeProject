@@ -10,6 +10,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Modal,
+  TouchableHighlight,
+  Button,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
@@ -17,6 +20,7 @@ function Profile({ navigation }) {
   const [edit, setEdit] = useState(true);
   const [image, setImage] = useState(null);
   const [profile, setProfile] = useState({});
+  const [modalVisible, setModalVisible] = useState(false);
   let ID = "60d8add9e49e43259871ef88";
 
   //Loading Data on Load
@@ -53,9 +57,12 @@ function Profile({ navigation }) {
         setProfile(dat.data);
         alert("Saved");
         setEdit(!edit);
+        setModalVisible(!modalVisible);
       })
       .catch((err) => {
         alert(err.message);
+        setEdit(!edit);
+        setModalVisible(!modalVisible);
       });
   }
 
@@ -73,112 +80,129 @@ function Profile({ navigation }) {
   };
 
   //Top section of navBar Edit and Save
-  navigation.setOptions({
-    headerRight: () => (
-      <TouchableOpacity
-        style={{ borderWidth: 1, padding: 5, margin: 7, borderRadius: 5 }}
-        onPress={Edit}
-      >
-        <Text>{edit ? "Edit" : "Save"}</Text>
-      </TouchableOpacity>
-    ),
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{ borderWidth: 1, padding: 5, margin: 7, borderRadius: 5 }}
+          onPress={Edit}
+          className={styles.none}
+        >
+          <Text>{edit ? "Edit" : "Save"}</Text>
+        </TouchableOpacity>
+      ),
+    });
   });
 
   //Edit function
   const Edit = () => {
     if (edit) {
       setEdit(!edit);
-    } else {
-      saveProfile();
+      setModalVisible(!modalVisible);
     }
   };
 
   return (
     //Entire Body
     <View style={styles.body}>
-      {edit ? (
-        <>
-          {/* Normal Section  */}
-          <View style={styles.imageBody}>
-            <Image
-              style={styles.image}
-              alt="alt"
-              source={{ uri: `${profile.image}` }}
-            />
-          </View>
-          <View style={styles.content}>
-            <Text style={styles.text}>{profile.name}</Text>
-            <Text style={styles.text}>{profile.username}</Text>
-            <Text style={styles.text}>{profile.age}</Text>
-            <Text style={styles.text}>{profile.email}</Text>
-            <Text style={styles.text}>{profile.number}</Text>
-          </View>
-        </>
-      ) : (
-        <>
-          {/* Edit Section */}
-          <TouchableOpacity style={styles.imageBody} onPress={pickImage}>
-            {image && (
-              <Image style={styles.image} alt="alt" source={{ uri: image }} />
-            )}
-          </TouchableOpacity>
-          <View
-            style={{ flexDirection: "column", alignContent: "space-between" }}
-          >
-            <View style={styles.content}>
-              <TextInput
-                value={profile.name}
-                style={styles.text}
-                placeholder="Name"
-                autoCapitalize="sentences"
-                onChangeText={(text) => setProfile({ ...profile, name: text })}
-              ></TextInput>
-              <TextInput
-                value={profile.username}
-                style={styles.text}
-                placeholder="User name"
-                textContentType="username"
-                onChangeText={(text) =>
-                  setProfile({ ...profile, username: text })
-                }
-              ></TextInput>
-              <TextInput
-                value={profile.age}
-                style={styles.text}
-                placeholder="Age"
-                onChangeText={(text) => setProfile({ ...profile, age: text })}
-              ></TextInput>
-              <TextInput
-                value={profile.email}
-                style={styles.text}
-                placeholder="Email"
-                autoCompleteType="email"
-                textContentType="emailAddress"
-                onChangeText={(text) => setProfile({ ...profile, email: text })}
-              ></TextInput>
-              <TextInput
-                value={profile.number}
-                style={styles.text}
-                placeholder="Phone number"
-                keyboardType="numeric"
-                onChangeText={(text) =>
-                  setProfile({ ...profile, number: text })
-                }
-              ></TextInput>
-              <TextInput
-                value={profile.password}
-                style={styles.text}
-                secureTextEntry={true}
-                placeholder="Password"
-                textContentType="password"
-                onChangeText={(text) =>
-                  setProfile({ ...profile, password: text })
-                }
-              ></TextInput>
+      {/* Normal Section  */}
+      <View style={styles.imageBody}>
+        <Image
+          style={styles.image}
+          alt="alt"
+          source={{ uri: `${profile.image}` }}
+        />
+      </View>
+      <View style={styles.content}>
+        <Text style={styles.text}>{profile.name}</Text>
+        <Text style={styles.text}>{profile.username}</Text>
+        <Text style={styles.text}>{profile.age}</Text>
+        <Text style={styles.text}>{profile.email}</Text>
+        <Text style={styles.text}>{profile.number}</Text>
+      </View>
+      {/* Edit Section */}
+      <View>
+        <Modal animationType="fade" transparent={true} visible={modalVisible}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <TouchableOpacity style={styles.imageBody} onPress={pickImage}>
+                {image && (
+                  <Image
+                    style={styles.image}
+                    alt="alt"
+                    source={{ uri: image }}
+                  />
+                )}
+              </TouchableOpacity>
+              <View
+                style={{
+                  flexDirection: "column",
+                  alignContent: "space-between",
+                }}
+              >
+                <View>
+                  <TextInput
+                    value={profile.name}
+                    style={styles.TextInput}
+                    placeholder="Name"
+                    autoCapitalize="sentences"
+                    onChangeText={(text) =>
+                      setProfile({ ...profile, name: text })
+                    }
+                  ></TextInput>
+                  <TextInput
+                    value={profile.username}
+                    style={styles.TextInput}
+                    placeholder="User name"
+                    textContentType="username"
+                    onChangeText={(text) =>
+                      setProfile({ ...profile, username: text })
+                    }
+                  ></TextInput>
+                  <TextInput
+                    value={profile.age}
+                    style={styles.TextInput}
+                    placeholder="Age"
+                    onChangeText={(text) =>
+                      setProfile({ ...profile, age: text })
+                    }
+                  ></TextInput>
+                  <TextInput
+                    value={profile.email}
+                    style={styles.TextInput}
+                    placeholder="Email"
+                    autoCompleteType="email"
+                    textContentType="emailAddress"
+                    onChangeText={(text) =>
+                      setProfile({ ...profile, email: text })
+                    }
+                  ></TextInput>
+                  <TextInput
+                    value={profile.number}
+                    style={styles.TextInput}
+                    placeholder="Phone number"
+                    keyboardType="numeric"
+                    onChangeText={(text) =>
+                      setProfile({ ...profile, number: text })
+                    }
+                  ></TextInput>
+                  <TextInput
+                    value={profile.password}
+                    style={styles.TextInput}
+                    secureTextEntry={true}
+                    placeholder="Password"
+                    textContentType="password"
+                    onChangeText={(text) =>
+                      setProfile({ ...profile, password: text })
+                    }
+                  ></TextInput>
+                  <Button onPress={() => saveProfile()} title="Save"></Button>
+                </View>
+              </View>
             </View>
           </View>
-        </>
-      )}
+        </Modal>
+      </View>
     </View>
   );
 }
@@ -234,5 +258,36 @@ const styles = StyleSheet.create({
   },
   none: {
     display: "none",
+  },
+
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    margin: Dimensions.get("screen").width / 10,
+  },
+  modalView: {
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 5,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+
+  TextInput: {
+    width: "100%",
+    fontSize: 20,
+    padding: 10,
+    borderBottomColor: "gray",
+    marginVertical: 5,
+    backgroundColor: "#D3D3D3",
+    borderRadius: 5,
   },
 });

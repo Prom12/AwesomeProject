@@ -3,4 +3,5 @@ export const Products = {
   CREATE: "CREATE",
   UPDATE: "UPDATE",
   DELETE: "DELETE",
+  CART: "CART",
 };

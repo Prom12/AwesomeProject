@@ -7,8 +7,11 @@ import {
   Image,
   Dimensions,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { Products } from "../../redux/actions/product";
 
 export default function Item({ route, navigation }) {
+  const dispatch = useDispatch();
   return (
     <View style={styles.body}>
       <Image
@@ -53,6 +56,7 @@ export default function Item({ route, navigation }) {
             <View style={styles.add}>
               <Text
                 onPress={() => {
+                  dispatch({ type: Products.CART, payload: route.params });
                   navigation.navigate("MainPage");
                 }}
                 style={{

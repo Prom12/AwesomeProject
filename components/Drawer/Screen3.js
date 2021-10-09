@@ -3,15 +3,15 @@ import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 const Screen = () => {
   const { userToken } = useSelector((state) => state.authReducer);
-  const { products } = useSelector((state) => state.productReducer);
-  var prod = products.filter((post) => post.detail == "detail");
+  const { cart } = useSelector((state) => state.productReducer);
+  //var prod = cart.filter((post) => post.detail == "detail");
 
   return (
     <View>
       {userToken ? (
         <TouchableOpacity>
           <FlatList
-            data={prod}
+            data={cart}
             horizontal={false}
             numColumns={2}
             ListEmptyComponent={<Text>Loading Data.................</Text>}
