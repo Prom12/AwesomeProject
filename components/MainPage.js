@@ -17,10 +17,15 @@ function MainPage({ navigation }) {
   const { signOut } = React.useContext(AuthContext);
   const { products } = useSelector((state) => state.productReducer);
   const { userToken } = useSelector((state) => state.authReducer);
+  // const userToke = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const fetchProducts = () => dispatch(getProducts());
   useEffect(() => {
     fetchProducts();
+    // console.log(userToke);
+    // const str = "0252515254,http://:sfddfasdfdfsdfsdfdgdfgdf/sdfs/sdfsdf.png";
+    // const sec = str.split(",");
+    // console.log("lk;lk;", sec[1]);
   }, []);
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -34,9 +39,11 @@ function MainPage({ navigation }) {
       ),
     });
   }, [navigation]);
+
   return (
     <View style={styles.body}>
       <Head name="Categories"></Head>
+
       <FlatList
         data={products}
         horizontal={false}

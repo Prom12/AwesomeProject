@@ -1,17 +1,25 @@
 import React from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 const Screen = () => {
   const { userToken } = useSelector((state) => state.authReducer);
   const { cart } = useSelector((state) => state.productReducer);
   //var prod = cart.filter((post) => post.detail == "detail");
-
+  var carts = [
+    ...new Map(cart.map((item) => [JSON.stringify(item), item])).values(),
+  ];
   return (
-    <View>
+    <SafeAreaView style={{ marginTop: 40 }}>
       {userToken ? (
         <TouchableOpacity>
           <FlatList
-            data={cart}
+            data={carts}
             horizontal={false}
             numColumns={2}
             ListEmptyComponent={<Text>Loading Data.................</Text>}
@@ -29,7 +37,7 @@ const Screen = () => {
           <Text>Screen1</Text>
         </TouchableOpacity>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 export default Screen;

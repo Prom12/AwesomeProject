@@ -12,6 +12,78 @@ import { Products } from "../../redux/actions/product";
 
 export default function Item({ route, navigation }) {
   const dispatch = useDispatch();
+  const [fish, setFish] = React.useState("do");
+  var button = <></>;
+  if (fish == "goat") {
+    button = (
+      <TouchableOpacity>
+        <View style={styles.add}>
+          <Text
+            onPress={() => {
+              dispatch({
+                type: Products.CART,
+                payload: route.params,
+              });
+              navigation.navigate("MainPage");
+            }}
+            style={{
+              color: "#10F1E1",
+              fontSize: 30,
+              textAlign: "center",
+            }}
+          >
+            Add To Cart
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  } else if (fish == "dog") {
+    button = (
+      <TouchableOpacity>
+        <View style={styles.add}>
+          <Text
+            onPress={() => {
+              dispatch({
+                type: Products.CART,
+                payload: route.params,
+              });
+              navigation.navigate("MainPage");
+            }}
+            style={{
+              color: "#10F1E1",
+              fontSize: 30,
+              textAlign: "center",
+            }}
+          >
+            Add To Car
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  } else {
+    button = (
+      <TouchableOpacity>
+        <View style={styles.add}>
+          <Text
+            onPress={() => {
+              dispatch({
+                type: Products.CART,
+                payload: route.params,
+              });
+              navigation.navigate("MainPage");
+            }}
+            style={{
+              color: "#10F1E1",
+              fontSize: 30,
+              textAlign: "center",
+            }}
+          >
+            Add To Cat
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
   return (
     <View style={styles.body}>
       <Image
@@ -51,28 +123,7 @@ export default function Item({ route, navigation }) {
       <View style={styles.bottomView}>
         <Text style={{ fontSize: 20, padding: 5 }}>Ingredients</Text>
         {/* <Text>{route.params.detail}</Text> */}
-        <View style={styles.button}>
-          <TouchableOpacity>
-            <View style={styles.add}>
-              <Text
-                onPress={() => {
-                  dispatch({
-                    type: Products.CART,
-                    payload: route.params,
-                  });
-                  navigation.navigate("MainPage");
-                }}
-                style={{
-                  color: "#10F1E1",
-                  fontSize: 30,
-                  textAlign: "center",
-                }}
-              >
-                Add To Cart
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        <View style={styles.button}>{button}</View>
       </View>
     </View>
   );

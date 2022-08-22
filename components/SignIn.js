@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Image, Text, Dimensions } from "react-native";
 import Input from "./RepeatedComponents/Input";
 import { AuthContext } from "../AuthContext";
+import { useSelector, useDispatch } from "react-redux";
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const { signIn } = React.useContext(AuthContext);
 
+  // useEffect(() => {
+  //   console.log(useSelector((state) => state.authReducer));
+  // }, []);
+  // useEffect(() => {
+  //   console.log(useSelector((state) => state.authReducer));
+  // }, []);
   const emailInput = (enteredText) => {
     setEmail(enteredText);
   };

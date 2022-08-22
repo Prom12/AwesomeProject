@@ -1,8 +1,8 @@
 // In App.js in a new project
 
-import React from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import SignIn from "./components/SignIn";
@@ -19,35 +19,40 @@ import { Auth } from "./redux/actions/auth";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "./constants/axios.js";
 
-const Drawer = createDrawerNavigator();
+const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
-const DrawerStack2 = createStackNavigator();
+const TabStack = createStackNavigator();
 
-const DrawerStack2Screen = () => (
-  <DrawerStack2.Navigator>
-    <DrawerStack2.Screen
+const TabStackScreen = () => (
+  <TabStack.Navigator>
+    <TabStack.Screen
       name="MainPage"
       component={MainPage}
+      activeColor="#f0edf6"
+      inactiveColor="#3e2465"
       options={{
         headerShown: true,
         title: "",
         textAlign: "center",
       }}
     />
-    <DrawerStack2.Screen
+    <TabStack.Screen
       name="Item"
       options={{
         headerShown: false,
       }}
+      activeColor="#f0edf6"
+      inactiveColor="#3e2465"
       component={Item}
     />
-  </DrawerStack2.Navigator>
+  </TabStack.Navigator>
 );
 
 const nav = () => {
   const dispatch = useDispatch();
   const { userToken } = useSelector((state) => state.authReducer);
   // const { profiles } = useSelector((state) => state.authReducer);
+
   // React.useEffect(() => {
   //   (async () => {
   //     await axios
@@ -115,21 +120,21 @@ const nav = () => {
     <NavigationContainer>
       <AuthContext.Provider value={authMemo}>
         {userToken ? (
-          <Drawer.Navigator initialRouteName="Main">
-            <Drawer.Screen
+          <Tab.Navigator initialRouteName="Main">
+            <Tab.Screen
               name="Profile"
               component={Profile}
               options={{
                 headerShown: true,
               }}
             />
-            <Drawer.Screen name="Main" component={DrawerStack2Screen} />
-            <Drawer.Screen
+            <Tab.Screen name="Main" component={TabStackScreen} />
+            <Tab.Screen
               name="Cart"
               component={Screen3}
               options={{ headerShown: true }}
             />
-          </Drawer.Navigator>
+          </Tab.Navigator>
         ) : (
           <Stack.Navigator>
             <Stack.Screen
